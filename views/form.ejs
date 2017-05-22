@@ -1,0 +1,57 @@
+<div style="margin: 0 auto; width: 800px;">
+<form action="/results" method="get">
+    <input name="term" type="text" placeholder="Title" required></input>
+    <button type="submit">Search</button>
+</form>
+
+<table style="border: 1px solid black; border-collapse:collapse; padding: 5px">
+    <thead>
+        <th style="border: 1px solid black; padding: 5px">Title</th>
+        <th style="border: 1px solid black; padding: 5px">Release</th>
+        <th style="border: 1px solid black; padding: 5px">ID</th>
+        <th style="border: 1px solid black; padding: 5px">Type</th>
+        <th style="border: 1px solid black; padding: 5px">Image</th>
+    </thead>
+    <tbody style="padding: 5px;">
+        <% results.forEach(function(result){ %>
+        <tr>
+            <td style="border: 1px solid black; padding: 5px"><%= result.title %></td>
+            <td style="border: 1px solid black; padding: 5px"><%= result.release_date %></td>
+            <td style="border: 1px solid black; padding: 5px"><%= result.id %></td>
+            <td style="border: 1px solid black; padding: 5px"><%= getGenre(result.genre_ids) %></td>
+            <td style="border: 1px solid black; padding: 5px; text-align: center"><img style="height: 150px" src="https://image.tmdb.org/t/p/w154<%=result.poster_path%>" alt="<%= result.title %>"></img></td>
+        </tr>
+        <% }); %>
+    </tbody>
+</table>
+</div>
+<% function getGenre(ids){
+    var result;
+    var genres = [];
+    legend = {
+        12: "Adventure",
+        13: "Romance",
+        14: "Fantasy",
+        16: "Animation",
+        18: "Drama",
+        27: "Horror",
+        28: "Action",
+        35: "Comedy",
+        36: "History",
+        37: "Western",
+        53: "Thriller",
+        80: "Crime",
+        99: "Documentary",
+        878: "Science Fiction",
+        9648: "Mystery",
+        10402: "Music",
+        10751: "Family",
+        10752: "War",
+        10770: "TV Movie"
+    }
+    ids.forEach(function(id){
+        genres.push(legend[id]);
+    });
+    result = genres.join(", ");
+    return result;
+} %>
